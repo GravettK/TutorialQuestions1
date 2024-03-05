@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class MeritGrades{
+    public string Names { get; set; }
+    public List<int> Grades { get; set; }
+}
+
+class Program{
+    static void Main(){
+
+        List<Student> students = new List<Student> { // Creates a list of student objects with names and grades{
+            new Student { Names = "Jake", Grades = new List<int> { 85, 90, 78, 92 }},
+            new Student { Names = "Sam", Grades = new List<int> { 75, 88, 92, 80 }},
+            new Student { Names = "Asher", Grades = new List<int> { 92, 87, 89, 78 }},
+   
+        };
+
+       
+        double max = 80;  // Set the threshold for average grade
+
+
+          var result = students  // Use LINQ to calculate average grades and filter students
+            .Select(student => new{
+                student.Names,
+                AverageGrade = student.Grades.Average()
+            })
+            .Where(student => student.AverageGrade > max)
+            .ToList();
+
+       
+        Console.WriteLine($"Students with an average grade above {max}%:");  // Display the results
+        foreach (var student in result){
+            Console.WriteLine($"{student.Names}: {student.AverageGrade:F2}");
+        }
+    }
+}
